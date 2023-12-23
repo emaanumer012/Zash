@@ -9,10 +9,7 @@
         <section>
             <div class="container-fluid ">
                 <div class="row">
-                    <div class="section-a image-signin col-lg-6 col-md-6">
-                        <img src="../images/signin.png" alt="" style="width:90%">
-                    </div>
-                    <div class="login-form col-lg-6 col-md-6 admin">
+                    <div class="login-form col-lg-12 col-md-6 admin">
                         <h1>ZASH</h1>
                         <H2>SIGN IN AS ADMIN</H2>
                         <br>
@@ -38,7 +35,7 @@
                                     {{ session('alert') }}
                                 </div>                            @endif -->
 
-                            <h5> Incorrect Credentials, Log in Again!</h5>
+                            <h5 style="color:red; text-align:center;"> Incorrect Credentials, Log in Again!</h5>
 
 
 

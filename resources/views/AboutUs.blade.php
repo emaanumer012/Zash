@@ -11,11 +11,6 @@
     @section('main-section')
 
    <x-NavBar></x-NavBar>
-    <div class="embed-responsive embed-responsive-16by9" style="padding:0%;">
-        <video class="embed-responsive-item" width="100%" autoplay loop muted>
-            <source src="images\AboutUs.mp4" type="video/mp4"  />
-        </video>
-    </div>
 
     <section class="section1">
         @foreach($infos as $info)
@@ -37,42 +32,42 @@
 
         <div class="pro_div" style="background-color: #1d4a85; " >
             <div style="float: left;">
-            <img src="images\hafsa.PNG" alt="" class="pic img-responsive">
+            <img src="images\emaan.jpeg" alt="" class="pic img-responsive">
              </div>
              <div style="float: left;">
-            <p><b>Name:</b>Hafsa Tariq</p>
+            <p><b>Name:</b>Emaan Umer</p>
             <p><b>Profession:</b>Software Engineer</p>
-            <p><b>Instagram:</b> <a href="https://www.instagram.com/h_afsatariq/?hl=en"> h_afsatariq</a></p>
+            <p><b>Instagram:</b> <a href=""> localEmaan</a></p>
         </div>
         </div>
         <div class="pro_div" style="background-color:#082142;" >
             <div style="float: left;">
-            <img src="images\zainab.jpeg" alt="" class="pic img-responsive">
+            <img src="images\umair.jpeg" alt="" class="pic img-responsive">
              </div>
              <div style="float: left;">
-            <p><b>Name:</b>Zainab Anwaar</p>
+            <p><b>Name:</b>Umair Asim</p>
             <p><b>Profession:</b>Software Engineer</p>
-            <p><b>Instagram:</b><a href="https://www.instagram.com/zainab_anwaar03/?hl=en" > zainab_anwaar03 </a></p>
+            <p><b>Instagram:</b><a href="" > umairAsim </a></p>
         </div>
         </div>
         <div class="pro_div" style="background-color:#082142; " >
             <div style="float: left;">
-            <img src="images\sadia.jpeg" alt=""  class="pic img-responsive">
+            <img src="images\fahd.jpeg" alt=""  class="pic img-responsive">
              </div>
              <div style="float: left;">
-            <p><b>Name:</b>Sadia Rehman</p>
+            <p><b>Name:</b>Fahd Ahmed</p>
             <p><b>Profession:</b>Software Engineer</p>
-            <p><b>Instagram:</b> <a href="https://www.instagram.com/burningbluephlanets/"> burningbluephlanets</a></p>
+            <p><b>Instagram:</b> <a href=""> OyeFadh</a></p>
         </div>
         </div>
         <div class="pro_div" style="background-color: #1d4a85; ">
             <div style="float: left;">
-            <img src="images\Amna.PNG" alt=""class="pic img-responsive">
+            <img src="images\Ahmed.jpeg" alt=""class="pic img-responsive">
              </div>
              <div style="float: left;">
-            <p><b>Name:</b>Amna Ahmed</p>
+            <p><b>Name:</b>Ahmed Abdullah</p>
             <p><b>Profession:</b>Software Engineer</p>
-            <p><b>Instagram:</b> <a href="https://www.instagram.com/whimsical_critter/"> whimsical_critter</a></p>
+            <p><b>Instagram:</b> <a href=""> Ded</a></p>
         </div>
         </div>
 

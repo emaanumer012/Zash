@@ -9,7 +9,7 @@
 
 
         <div class="section-a table-responsive-sm table-responsive-lg table-responsive-md table-responsive-xl">
-            <x-NavBar></x-NavBar>
+        <x-nav-bar-admin></x-nav-bar-admin>
             <table class="table table-primary">
                 <thead>
                     <tr>

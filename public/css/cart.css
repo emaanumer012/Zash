@@ -16,26 +16,11 @@
     src: url("/font/Gothic.ttf");
 }
 
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
 
 
 body {
     font-family: gothic;
-    background: -webkit-linear-gradient(-45deg, rgb(12, 12, 40), #978d07, rgb(15, 15, 22), #071328, rgb(20, 22, 36));
-    animation: gradient 10s ease infinite;
+    background: -webkit-linear-gradient(-45deg, rgb(12, 12, 40), #353204, rgb(15, 15, 22), #071328, rgb(20, 22, 36));
     background-size: 400% 400%;
     color: #f7e991;
 }

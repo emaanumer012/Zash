@@ -10,11 +10,11 @@
 
     @section('main-section')
     <x-Navbar />
-    <div class="embed-responsive embed-responsive-16by9" style="padding:0%;">
+    <!-- <div class="embed-responsive embed-responsive-16by9" style="padding:0%;">
         <video class="embed-responsive-item" width="100%" autoplay loop muted>
             <source src="images\ContactUs.mp4" type="video/mp4" />
         </video>
-    </div>
+    </div> -->
     <section class="section1">
         <div class="div1">
             @foreach($infos as $info)

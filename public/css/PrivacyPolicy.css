@@ -14,25 +14,10 @@ body {
 
     font-family: gothic;
     color: #f7e991;
-    background: -webkit-linear-gradient(-45deg, rgb(12, 12, 40), #978d07, rgb(15, 15, 22), #071328, rgb(20, 22, 36));
-    animation: gradient 10s ease infinite;
+    background: -webkit-linear-gradient(-45deg, rgb(12, 12, 40), #5e5805, rgb(15, 15, 22), #071328, rgb(20, 22, 36));
     background-size: 400% 400%;
-
 }
 
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
 
 .psize {
     width: 70%;

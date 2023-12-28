@@ -1,7 +1,7 @@
 # ZASH
 ### Online cosmetics store
 
-## Web Engineering Project 
+## Software Construction Semester Project
 ## Use this readme file for reference for doc report!
 
 

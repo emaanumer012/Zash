@@ -1,9 +1,6 @@
 <?php
 
 namespace Tests\Feature\feature;
-
-
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
 use App\Models\Cart;
@@ -13,7 +10,10 @@ use function PHPUnit\Framework\assertNotNull;
 
 class OrderTest extends TestCase
 {
-
+    /**
+     * Test that an order is created after checkout.
+     *
+     */
     public function test_order_was_created_after_checkout()
     {
         $product = new Cart();
@@ -44,6 +44,10 @@ class OrderTest extends TestCase
         assertNotNull($order);
     }
 
+    /**
+     * Test that an admin can view all orders.
+     *
+     */
     public function test_admin_can_view_all_orders()
     {
         $admin = new Admin();
@@ -56,6 +60,10 @@ class OrderTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /**
+     * Test that authentication is required to view all orders.
+     *
+     */
     public function test_auth_required_to_view_all_orders()
     {
         $response = $this->get('/orders');

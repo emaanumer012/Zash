@@ -17,4 +17,5 @@ class AdminOrderController extends Controller
         $data = compact('checkouts');
         return view("OrdersTable")->with($data);
     }
+
 }

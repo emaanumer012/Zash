@@ -1,207 +1,138 @@
 <?php
 
-namespace Tests\Feature\Feature;
+namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Support\Facades\DB;
-use App\Models\Product;
 use App\Models\Cart;
 
-use function PHPUnit\Framework\assertEquals;
-
-class CheckoutTest extends TestCase
+class CartTest extends TestCase
 {
-
-    public function test_checkout_url_status_ok()
+    /**
+     * Test whether the URL /cart returns a status code of 200.
+     *
+     */
+    public function test_cart_url_status_ok()
     {
-        $response = $this->get('/checkout');
+        $response = $this->get('/cart');
 
         $response->assertStatus(200);
     }
 
-    public function test_checkout_form_can_be_submitted()
+    /**
+     * Test that the carts table is initially empty.
+     *
+     */
+    public function test_cart_should_be_initially_empty()
     {
-
-        $response = $this->post('/checkout', [
-            'fname' => 'John',
-            'lname' => 'Doe',
-            'email' => 'john.doe@example.com',
-            'address' => '123 Main St',
-            'city' => 'Anytown',
-        ]);
-
-        $response->assertStatus(200);
+        $items = DB::table('carts')->get();
+        $this->assertEmpty($items);
     }
 
-    public function test_user_cannot_submit_checkout_form_with_invalid_email()
+    /**
+     * Test the addition of a product to the cart.
+     *
+     */
+    public function test_add_product_to_cart()
     {
-        $response = $this->post('/checkout', [
-            'fname' => 'John',
-            'lname' => 'Doe',
-            'city'  => "abc",
-            'email' => 'john.doe',
-            'address' => '123 Main St',
-        ]);
-        $response->assertStatus(200);
-        // Check if the error message is present in the response
-        $response->assertSessionHasNoErrors(['email']);
+        $productId = 1;
+        $response = $this->get("/add-to-cart/{$productId}");
+        $response->assertStatus(302);
+
+        $item = DB::table('carts')->get()->where('productID', $productId);
+        $this->assertNotNull($item);
     }
 
-    public function test_user_cannot_submit_checkout_form_without_city_field()
+     /**
+     * Test attempting to add a nonexistent product to the cart.
+     *
+     */
+    public function test_add_nonexistant_product_to_cart()
     {
-        try {
-            $this->withoutExceptionHandling();
-            $response = $this->withoutExceptionHandling()->post('/checkout', [
-                'fname' => 'John',
-                'lname' => 'Doe',
-                'email' => 'john.doe@example.com',
-                'address' => '123 Main St',
-            ]);
-            // Check the response status
-            $response->assertStatus(500);
-
-            // Check if the error message is present in the response
-            $response->assertSessionHasErrors(['city']);
-        } catch (\Illuminate\Database\QueryException $e) {
-            $this->assertStringContainsString("Column 'city' cannot be null", $e->getMessage());
-            return;
-        }
+        $productId = 1000;
+        $response = $this->get("/add-to-cart/{$productId}");
+        $response->assertSessionHasErrors();
     }
 
-    public function test_user_cannot_submit_checkout_form_without_firstname_field()
+    /**
+     * Test the ability to change the quantity of a product in the cart.
+     *
+     */
+    public function test_change_quantity_of_product_in_cart()
     {
-        try {
-            $this->withoutExceptionHandling();
-            $response = $this->withoutExceptionHandling()->post('/checkout', [
-                'lname' => 'Doe',
-                'email' => 'john.doe@example.com',
-                'address' => '123 Main St',
-                'city' => 'abs'
-            ]);
-            // Check the response status
-            $response->assertStatus(500);
+        $product = new Cart();
+        $product->productID = 1;
+        $product->cart_id = 1;
+        $product->Quantity = 2;
+        $product->save();
 
-            // Check if the error message is present in the response
-            $response->assertSessionHasErrors(['firstname']);
-        } catch (\Illuminate\Database\QueryException $e) {
-            $this->assertStringContainsString("Column 'firstname' cannot be null", $e->getMessage());
-            return;
-        }
+        // Submit the form
+        $response = $this->get("/update-cart?productID={$product->productID}&quantity={$product->Quantity}");
+
+        // Check the response status
+        $response->assertStatus(302);
+
+        // Check if the product quantity was updated in the database
+        $cartItem = Cart::where('productID', $product->productID)->first();
+        $this->assertEquals($product->Quantity, $cartItem->Quantity);
     }
 
-    public function test_user_cannot_submit_checkout_form_without_lastname_field()
+     /**
+     * Test that the quantity of a product in the cart cannot be negative.
+     *
+     */
+    public function test_cart_product_quantity_shouldnt_be_negative()
     {
-        try {
-            $this->withoutExceptionHandling();
-            $response = $this->withoutExceptionHandling()->post('/checkout', [
-                'fname' => 'Doe',
-                'email' => 'john.doe@example.com',
-                'address' => '123 Main St',
-                'city' => 'abs'
-            ]);
-            // Check the response status
-            $response->assertStatus(500);
+        $product = new Cart();
+        $product->productID = 1;
+        $product->cart_id = 1;
+        $product->Quantity = -2;
+        $product->save();
 
-            // Check if the error message is present in the response
-            $response->assertSessionHasErrors(['lastname']);
-        } catch (\Illuminate\Database\QueryException $e) {
-            $this->assertStringContainsString("Column 'lastname' cannot be null", $e->getMessage());
-            return;
-        }
+        // Submit the form
+        $response = $this->get("/update-cart?productID={$product->productID}&quantity={$product->Quantity}");
+
+        $response->assertSessionMissing('cart');
+        $response->assertSessionHasErrors(['quantity']);
+    }
+    
+    /**
+     * Test that the quantity of a product in the cart cannot be zero.
+     *
+     */
+    public function test_cart_product_quantity_shouldnt_be_zero()
+    {
+        $product = new Cart();
+        $product->productID = 1;
+        $product->cart_id = 1;
+        $product->Quantity = 0;
+        $product->save();
+
+        // Submit the form
+        $response = $this->get("/update-cart?productID={$product->productID}&quantity={$product->Quantity}");
+
+        $response->assertSessionMissing('cart');
+        $response->assertSessionHasErrors(['quantity']);
     }
 
-
-    public function test_user_cannot_submit_checkout_form_without_email_field()
+    /**
+     * Test that the quantity of a product in the cart cannot exceed the available inventory.
+     *
+     */
+    public function test_cart_product_quantity_should_be_less_than_or_equal_to_inventory()
     {
-        try {
-            $this->withoutExceptionHandling();
-            $response = $this->withoutExceptionHandling()->post('/checkout', [
-                'fname' => 'John',
-                'lname' => 'Doe',
-                'address' => '123 Main St',
-                'city' => 'abs'
-            ]);
-            // Check the response status
-            $response->assertStatus(500);
+        $product = new Cart();
+        $product->productID = 2;
+        $product->cart_id = 1;
+        $product->Quantity = 20;
+        $product->save();
 
-            // Check if the error message is present in the response
-            $response->assertSessionHasErrors(['email']);
-        } catch (\Illuminate\Database\QueryException $e) {
-            $this->assertStringContainsString("Column 'email' cannot be null", $e->getMessage());
-            return;
-        }
+        // Submit the form
+        $response = $this->get("/update-cart?productID={$product->productID}&quantity={$product->Quantity}");
+
+        $response->assertSessionMissing('cart');
+        $response->assertSessionHasErrors(['quantity']);
     }
-
-    public function test_user_cannot_submit_checkout_form_without_address_field()
-    {
-        try {
-            $this->withoutExceptionHandling();
-            $response = $this->withoutExceptionHandling()->post('/checkout', [
-                'fname' => 'John',
-                'lname' => 'Doe',
-                'email' => 'john.doe@example.com',
-                'city' => 'abs'
-            ]);
-            // Check the response status
-            $response->assertStatus(500);
-
-            // Check if the error message is present in the response
-            $response->assertSessionHasErrors(['address']);
-        } catch (\Illuminate\Database\QueryException $e) {
-            $this->assertStringContainsString("Column 'address' cannot be null", $e->getMessage());
-            return;
-        }
-    }
-
-    public function test_checkout_redirects_to_confirmation()
-    {
-        $response = $this->post('/checkout', [
-            'fname' => 'John',
-            'lname' => 'Doe',
-            'email' => 'john.doe@example.com',
-            'address' => '123 Main St',
-            'city' => 'Anytown',
-        ]);
-
-        // Assert that the response status code is 302 (redirect)
-        $response->assertStatus(200);
-
-        $response->assertSee('Thank you');
-    }
-
-//     public function test_product_inventory_reduced_after_checkout()
-//     {
-//         $original_product = DB::table('product')
-//             ->select('quantity')
-//             ->where('productID', 2)
-//             ->first();
-
-//         $original_quantity = $original_product->quantity;
-
-//         $product = new Cart();
-//         $product->productID = 2;
-//         $product->cart_id = 1;
-//         $product->Quantity = 2;
-//         $product->save();
-
-//         // Submit the form
-//         $response = $this->get("/update-cart?productID={$product->productID}&quantity={$product->Quantity}");
-
-//         // Check the response status
-//         $response->assertStatus(302);
-
-
-//         $response2 = $this->post('/checkout', [
-//             'fname' => 'John',
-//             'lname' => 'Doe',
-//             'email' => 'john.doe@example.com',
-//             'address' => '123 Main St',
-//             'city' => 'Anytown',
-//         ]);
-
-//         // Assert that the response status code is 302 (redirect)
-//         $response2->assertStatus(200);
-
-//         assertEquals($original_quantity - 2, 3);
-//     }
- }
+}

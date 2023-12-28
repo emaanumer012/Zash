@@ -42,8 +42,13 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`name`, `profession`, `email`, `instagram`, `password`, `picPath`) VALUES
-('Abubakar Javed', 'Software Engineer', 'ajaved.bese21seecs@seecs.edu.pk', '@abubakar_.jani', 'abubakar1243', 'images\\abubakar.PNG'),
-('Emaan Umer', 'Software Engineer', 'eumer.bese21seecs@seecs.edu.pk', '@brandedemaan', 'emaan1243', 'images\\emaan.PNG');
+
+('Emaan Umer', 'Software Engineer', 'Emaan.DeadlineDynamo@gmail.com', '@emaan_umer', '7a6882040cdd76b8b559b9f167677270', 'images\\emaan.PNG'),
+('Umer Bashir Mirza Bashir Ahmed', 'Software Engineer', 'Umer.LaidbackStriker@gmail.com', '@umerrr', '5ad5591853eb0ad741f1427693b7e1e2', 'images\\umer.PNG'),
+('Fahd Ahmad', 'Software Engineer', 'fahd.flavorfrenzy@gmail.com', '@fahd', 'bb9b3a94def47e9780d1c19039f16b43', 'images\\fahd.jpeg'),
+('Ahmed Abdullah', 'Software Engineer', 'ahmed.dedfluff66@gmail.com', '@ded', 'bb9b3a94def47e9780d1c19039f16b43', 'images\\ded.jpeg'),
+('Abubakar Javed', 'Software Engineer', 'Abubakar.MelodicMindscape@gmail.com', '@abubakar.jani', 'bb9b3a94def47e9780d1c19039f16b43', 'images\\jani.jpeg'),
+('Umair Asim', 'Software Engineer', 'umair.cosmicbarista@gmail.com', '@umayr', 'addef33525b5c7e993941b8b2737d03f', 'images\\umayr.jpeg');
 
 -- --------------------------------------------------------
 
@@ -88,6 +93,7 @@ CREATE TABLE `checkouts` (
 --
 
 INSERT INTO `checkouts` (`firstname`, `lastname`, `email`, `address`, `city`) VALUES
+
 ('abubakar', 'javed', 'abubakar@gmail.com', 'h12', 'islamabad'),
 ('ayesha', 'fatima', 'hello@gmail.com', 'h13', 'karachi'),
 ('emaan', 'fatima', 'hello@gmail.com', 'h13', 'karachi'),
@@ -97,6 +103,7 @@ INSERT INTO `checkouts` (`firstname`, `lastname`, `email`, `address`, `city`) VA
 ('a', 'ahmad', 'hdjd@sdhh', 'fsddg', 'tdrg'),
 ('t', 't', 'tt@e', 'r', 'r'),
 ('Amna', 'Ahmad', 'ahmad@gmail.com', 'h11', 'islamabad'),
+
 ('Sadia', 'Rehman', 'sadia123@gmail.com', '59BAsk7', 'Rwp');
 
 -- --------------------------------------------------------
@@ -120,7 +127,9 @@ INSERT INTO `informations` (`spec`, `heading`, `info`) VALUES
 ('ABOUT US', 'HOW TO PLACE ORDER?', ' Visit our website or visit our physical retail outlet in Centurus, Islamabad on the ground floor to find\r\n                your desired products You can place your order online and receive it in 2-5 days or place an order\r\n                online to pick it up from our retail outlet the same day if you require your desired products sooner'),
 ('ABOUT US', 'WHY CHOOSE US?', 'We guarantee 100% authenticity of our products We have something for everyone . We offer excellent\r\n                customer support and our brand advisors are highly skilled in their relevant fields allowing the\r\n                customers to gain amazing insights and product knowledge making their buying experience seamless. ZASH\r\n                Beauty is here to serve YOU.'),
 ('CONTACT US', 'OUR EMAIL?', 'If you have questions or comments regarding our Privacy Policy or our privacy practices, please contact\r\n                us by sending an email to ZASH@gmail.com.'),
-('CONTACT US', 'OUR FAX?', 'In regard of sending any fax we have a Data Controller of our brand, Dr.Abubakar. '),
+
+('CONTACT US', 'OUR FAX?', 'In regard of sending any fax we have a Data Controller of our brand, Emaan umer. You can contact the data\r\n                controller by writing to the address P.O.BOX F-10/3 Islamabad.'),
+
 ('CONTACT US', 'SOCIAL MEDIA?', 'Instagram : ZASH-Beauty\r\nFacebook : ZASH-Beauty\r\nTwitter : ZASH-Beauty');
 
 -- --------------------------------------------------------
